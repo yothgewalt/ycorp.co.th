@@ -11,7 +11,7 @@ interface GridPatternProps {
     height?: number;
     x?: number;
     y?: number;
-    strokeDasharray?: any;
+    strokeDasharray?: string | number | undefined;
     numSquares?: number;
     className?: string;
     maxOpacity?: number;
@@ -82,16 +82,18 @@ export default function GridPattern({
             }
         });
 
-        if (containerRef.current) {
-            resizeObserver.observe(containerRef.current);
+        const container = containerRef.current;
+
+        if (container) {
+            resizeObserver.observe(container);
         }
 
         return () => {
-            if (containerRef.current) {
-                resizeObserver.unobserve(containerRef.current);
+            if (container) {
+                resizeObserver.unobserve(container);
             }
         };
-    }, []);
+    }, [containerRef]);
 
     return (
         <svg
